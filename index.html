@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dickies Aguascalientes — Distribuidor Autorizado</title>
+<meta name="description" content="Dickies Aguascalientes - Workwear auténtico. Hecho para durar. Distribuidor autorizado, mayoreo, tienda física y contacto." />
+<link rel="stylesheet" href="src/css/base.css">
+<link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <!-- Top small bar -->
+  <div class="topbar" id="inicio">
+    <div>Distribuidor autorizado • Dickies Aguascalientes</div>
+    <div class="right">
+      <div class="">Av Convención de 1914 PTE. 1122-Local 2, Col España, Ags.</div>
+      <div style="font-weight:700">📞 (449) 586 6828</div>
+    </div>
+  </div>
+
+  <!-- Header / Navbar -->
+  <header class="transparent" style="position: fixed;">
+    <div class="nav">
+      <div class="brand">
+        <img src="src/img/logo.svg" alt="Logo Dickies" id="logoPlaceholder" style="height:50px;width:120px;object-fit:contain"/>
+      </div>
+
+      <!-- Desktop nav -->
+      <nav aria-label="main navigation">
+        <ul>
+          <li class="nav-item"><a href="#inicio">Inicio</a></li>
+
+          <li class="nav-item"><a href="#productos">Productos</a></li>
+
+          <li class="nav-item"><a href="#mayoreo">Mayoreo</a></li>
+
+          <li class="nav-item"><a href="#tienda">Tienda</a></li>
+          <li class="nav-item"><a href="#contacto">Contacto</a></li> 
+        </ul>
+      </nav>
+
+      <!-- Right actions -->
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="search-box" role="search" aria-label="Buscar">
+          <input type="search" placeholder="Búsqueda" style="border:0;background:transparent;outline:none" />
+        </div>
+
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle" aria-label="Abrir menu" id="menuToggle" style="display:none;background:transparent;border:1px solid #000000;padding:8px;border-radius:6px">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile offcanvas -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <strong style="font-size:16px">Menú</strong>
+        <button id="closeMobile" style="background:transparent;border:0;font-size:18px;color:white;">✕</button>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#mayoreo">Mayoreo</a></li>
+          <li><a href="#tienda">Tienda</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Inicio" style="position:relative;z-index:1;">
+    <video class="bg" id="heroBg" style="position:fixed;top:0;left:0;width:100%;height:100vh;object-fit:cover;z-index:-1;" autoplay muted loop playsinline>
+        <source src="src/vid/25-WWOF-19224_header_desktop_optimized.mp4" type="video/mp4">
+    </video>
+    <!-- Hero Image Placeholder -->
+    <div class="hero-image-placeholder" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;">
+    </div>
+    <div class="container" style="position:relative;z-index:2;">
+      <h1>Workwear auténtico. Hecho para durar.</h1>
+      <p>En Dickies Aguascalientes somos distribuidores autorizados. Encuentra tus prendas favoritas con calidad original y envíos a todo México.</p>
+      <div class="cta">
+        <a class="btn primary" href="#productos">Ver catálogo</a>
+        <a class="btn ghost" href="#mayoreo">Cotizar mayoreo</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Productos -->
+    <section id="productos" aria-label="Productos">
+      <div class="section-head fade-in">
+        <h2>Los clásicos de Dickies, en un solo lugar</h2>
+        <p>Descubre la colección de pantalones, chamarras, sudaderas y camisas que marcan estilo dentro y fuera del trabajo.</p>
+      </div>
+
+      <div class="products-grid fade-in" role="list">
+        <!-- Producto 1 -->
+        <article class="product" role="listitem">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=300&fit=crop" alt="Pantalón Dickies 874" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">Pantalones 874</div>
+            <div class="meta">Tallas: 28-42</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product="pantalones-874">Más info</a>
+              <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20los%20Pantalones%20874%20Dickies" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 2 -->
+        <article class="product">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop" alt="Chamarra Eisenhower Dickies" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">Chamarra Eisenhower</div>
+            <div class="meta">Tallas: S-XXL</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product="chamarra-eisenhower">Más info</a>
+              <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20la%20Chamarra%20Eisenhower%20Dickies" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 3 -->
+        <article class="product">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=300&fit=crop" alt="Sudaderas y Hoodies Dickies" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">Sudaderas y Hoodies</div>
+            <div class="meta">Tallas: S-XXL</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product="sudaderas-hoodies">Más info</a>
+              <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20las%20Sudaderas%20y%20Hoodies%20Dickies" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 4 -->
+        <article class="product">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=300&fit=crop" alt="Camisas Work Dickies" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">Camisas Work</div>
+            <div class="meta">Tallas: S-XXL</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product="camisas-work">Más info</a>
+              <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20las%20Camisas%20Work%20Dickies" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 5 -->
+        <article class="product">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&h=300&fit=crop" alt="Accesorios Dickies" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">Accesorios</div>
+            <div class="meta">Cinturones, gorras y parches</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product="accesorios">Más info</a>
+              <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20los%20Accesorios%20Dickies%20(cinturones,%20gorras%20y%20parches)" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 6 (ejemplo) -->
+        <article class="product">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop" alt="Colección WorkTech Dickies" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">WorkTech</div>
+            <div class="meta">Prendas que respiran • Desde $799</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product="worktech">Más info</a>
+              <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20la%20Colección%20WorkTech%20Dickies" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Mayoreo -->
+    <section id="mayoreo" style="margin-top:30px">
+      <div class="section-head slide-in-left">
+        <h2>Precios especiales para mayoreo</h2>
+        <p>Equipa a tu equipo, negocio o proyecto con ropa resistente y de calidad. Contamos con precios preferenciales al mayoreo.</p>
+      </div>
+
+      <div class="mayoreo scale-in">
+        <div class="left">
+          <h3>Beneficios</h3>
+          <ul>
+            <li>Pedidos desde 12 piezas mixtas.</li>
+            <li>Facturación disponible.</li>
+            <li>Envíos a todo México.</li>
+            <li>Atención personalizada.</li>
+          </ul>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+          <a class="btn primary" href="https://wa.me/524495866828?text=Hola%20quiero%20solicitar%20la%20lista%20de%20precios%20de%20mayoreo%20Dickies" target="_blank">Solicitar lista de precios en WhatsApp</a>
+          <small style="opacity:0.8">Atención de Lunes a Viernes</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tienda física -->
+    <section id="tienda" style="margin-top:30px">
+      <div class="section-head slide-in-right">
+        <h2>Visítanos en Aguascalientes</h2>
+        <p>Conoce nuestra tienda y llévate tu outfit Dickies hoy mismo. Contamos con variedad de tallas y modelos en piso.</p>
+      </div>
+
+      <div class="store fade-in">
+        <!-- Foto de la fachada de la tienda -->
+        <div class="store-front">
+          <img src="src/img/frontshop.jpeg" alt="Fachada de la tienda Dickies Aguascalientes">
+        </div>
+
+        <div class="store-info">
+          <div style="font-weight:700">Dirección</div>
+          <div class="muted">Av Convención de 1914 PTE. 1122-Local 2, Col España, Ags.</div>
+          <div style="margin-top:12px;font-weight:700">Horarios</div>
+          <div class="muted">Lun-Vie 10:00 - 19:00 • Sáb 10:00 - 15:00</div>
+
+          <iframe class="map-embed" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d734.7056156277687!2d-102.3111670792895!3d21.8697183215723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429efe59fbf9b11%3A0x8b521e830df8c9c!2sDickies%20Aguascalientes!5e0!3m2!1ses-419!2sus!4v1759347944551!5m2!1ses-419!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <aside class="contact-card">
+          <div style="font-weight:800;margin-bottom:6px">¿Necesitas ayuda?</div>
+          <p class="muted">Visítanos o contáctanos para reservar tu prueba de talla o solicitar cotización corporativa.</p>
+          <div style="margin-top:12px">
+            <a class="btn primary" href="mailto:ventas@dickies-aguascalientes.mx">ventas@dickies-aguascalientes.mx</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonios" style="margin-top:30px">
+      <div class="section-head fade-in">
+        <h2>Lo que dicen nuestros clientes</h2>
+      </div>
+
+      <div class="testimonials-carousel">
+        <div class="testimonials-track">
+          <div class="testimonial-item">
+            <strong>"La mejor tienda Dickies de la región"</strong>
+            <p>Siempre encuentro mi talla y la atención es excelente.</p>
+            <div class="testimonial-author">- Carlos M., Constructor</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Productos originales, 100% recomendados"</strong>
+            <p>Buena calidad y envíos rápidos a todo México.</p>
+            <div class="testimonial-author">- Ana L., Empresaria</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Atención personalizada excepcional"</strong>
+            <p>Me ayudaron a elegir el uniforme perfecto para mi equipo de trabajo.</p>
+            <div class="testimonial-author">- Roberto G., Supervisor</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Precios justos y calidad garantizada"</strong>
+            <p>Los pantalones Dickies duran años sin perder su forma ni color.</p>
+            <div class="testimonial-author">- María S., Técnica</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Excelente servicio al mayoreo"</strong>
+            <p>Cotizaciones rápidas y entregas puntuales para nuestros proyectos.</p>
+            <div class="testimonial-author">- Luis H., Contratista</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Variedad de tallas y modelos"</strong>
+            <p>Encuentro todo lo que necesito en una sola visita a la tienda.</p>
+            <div class="testimonial-author">- Patricia R., Diseñadora</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"La mejor tienda Dickies de la región"</strong>
+            <p>Siempre encuentro mi talla y la atención es excelente.</p>
+            <div class="testimonial-author">- Carlos M., Constructor</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Productos originales, 100% recomendados"</strong>
+            <p>Buena calidad y envíos rápidos a todo México.</p>
+            <div class="testimonial-author">- Ana L., Empresaria</div>
+          </div>
+          <div class="testimonial-item">
+            <strong>"Atención personalizada excepcional"</strong>
+            <p>Me ayudaron a elegir el uniforme perfecto para mi equipo de trabajo.</p>
+            <div class="testimonial-author">- Roberto G., Supervisor</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" style="margin-top:30px">
+      <div class="section-head fade-in">
+        <h2>Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq scale-in">
+        <div class="item"><strong>¿Hacen envíos?</strong><p class="muted">Sí, a todo México.</p></div>
+        <div class="item"><strong>¿Aceptan tarjeta?</strong><p class="muted">Sí, tarjeta, efectivo, transferencia.</p></div>
+        <div class="item"><strong>¿Hay cambios?</strong><p class="muted">Sí, dentro de 7 días con ticket y prenda en buen estado.</p></div>
+        <div class="item"><strong>¿Facturan?</strong><p class="muted">Sí, con datos fiscales completos.</p></div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" style="margin-top:30px">
+      <div class="section-head slide-in-left">
+        <h2>Estamos listos para ayudarte</h2>
+        <p>Ponte en contacto y te apoyamos con cotizaciones, tallas y disponibilidad.</p>
+      </div>
+
+      <div class="contact-grid fade-in">
+        <div class="contact-card">
+          <form id="contactForm">
+            <label for="name" style="display:block;font-weight:700;margin-bottom:6px">Nombre</label>
+            <input id="name" name="name" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ddd" />
+
+            <label for="email" style="display:block;font-weight:700;margin-top:12px;margin-bottom:6px">Correo</label>
+            <input id="email" name="email" type="email" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ddd" />
+
+            <label for="message" style="display:block;font-weight:700;margin-top:12px;margin-bottom:6px">Mensaje</label>
+            <textarea id="message" name="message" rows="5" style="width:100%;padding:10px;border-radius:6px;border:1px solid #ddd" placeholder="Quiero cotizar..."></textarea>
+
+            <div style="margin-top:12px;display:flex;gap:8px">
+              <button class="btn primary" type="submit">Enviar mensaje</button>
+              <a class="btn" href="tel:+524495866828" style="border:1px solid #ddd">Llamar</a>
+            </div>
+          </form>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:12px">
+          <div class="contact-card">
+            <strong>Contacto</strong>
+            <div class="muted" style="margin-top:8px">ventas@dickies-aguascalientes.mx</div>
+            <div class="muted">📞 (449) 586 6828</div>
+            <div class="social-buttons">
+              <a href="https://www.instagram.com/dickiesags?igsh=cmF2dG10NXV4cGNk" target="_blank" class="social-btn instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                Instagram
+              </a>
+              <a href="https://www.facebook.com/share/16fa7UZViX/?mibextid=wwXIfr" target="_blank" class="social-btn facebook">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Facebook
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <strong>Extras</strong>
+            <p class="muted" style="margin:8px 0 0">Catálogo descargable y guía de tallas.</p>
+            <div style="margin-top:8px">
+              <a class="btn primary" href="#" download>Descargar catálogo (PDF)</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="inner">
+      <div>
+        <div style="font-weight:800;margin-bottom:8px">Dickies Aguascalientes</div>
+        <div class="muted" style="max-width:380px">Distribuidor autorizado. Dickies es una marca registrada de VF Corporation. Este sitio corresponde a un distribuidor autorizado en México.</div>
+      </div>
+
+      <div>
+        <div style="font-weight:700;margin-bottom:8px">Links</div>
+        <a href="#inicio">Inicio</a>
+        <a href="#productos">Productos</a>
+        <a href="#mayoreo">Mayoreo</a>
+        <a href="#tienda">Tienda</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+
+      <div>
+        <div style="font-weight:700;margin-bottom:8px">Contacto</div>
+        <a href="mailto:ventas@dickies-aguascalientes.mx">ventas@dickies-aguascalientes.mx</a>
+        <a href="tel:+524495866828">📞 (449) 586 6828</a>
+        <div class="social-buttons">
+          <a href="https://www.instagram.com/dickiesags?igsh=cmF2dG10NXV4cGNk" target="_blank" class="social-btn instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/share/16fa7UZViX/?mibextid=wwXIfr" target="_blank" class="social-btn facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Product Info Modal -->
+  <div class="product-modal" id="productModal" aria-hidden="true">
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Cerrar modal">✕</button>
+      <div class="modal-body">
+        <div class="product-gallery">
+          <img id="modalMainImage" src="" alt="" class="main-image">
+          <div class="thumbnail-container" id="thumbnailContainer">
+            <!-- Thumbnails will be populated by JavaScript -->
+          </div>
+        </div>
+        <div class="product-details">
+          <h2 id="modalTitle"></h2>
+          <div class="product-meta" id="modalMeta"></div>
+          <div class="product-description" id="modalDescription"></div>
+          <div class="product-features" id="modalFeatures"></div>
+          <div class="product-actions">
+            <a class="btn primary" id="modalWhatsApp" href="#" target="_blank">Cotizar por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Confirmation Modal -->
+  <div class="product-modal" id="emailModal" aria-hidden="true">
+    <div class="modal-overlay" id="emailModalOverlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="emailModalClose" aria-label="Cerrar modal">✕</button>
+      <div class="modal-body" style="grid-template-columns: 1fr; text-align: center; padding: 40px;">
+        <div style="margin-bottom: 20px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">📧</div>
+          <h2 style="margin-bottom: 16px; color: #333;">¡Mensaje enviado!</h2>
+          <p style="color: #666; margin-bottom: 24px;">Se abrirá tu cliente de correo para enviar el mensaje a <strong>ventas@dickies-aguascalientes.mx</strong></p>
+          <div style="display: flex; gap: 12px; justify-content: center;">
+            <button class="btn primary" id="emailModalOk">Entendido</button>
+            <a class="btn" href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20productos%20Dickies" target="_blank" style="border: 1px solid #ddd;">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp -->
+  <div class="whatsapp" role="complementary" aria-label="WhatsApp">
+    <a href="https://wa.me/524495866828?text=Hola%20quiero%20cotizar%20productos%20Dickies" target="_blank" rel="noopener">
+      <!-- You can replace the emoji with an svg icon -->
+      💬 Cotizar (WhatsApp)
+    </a>
+  </div>
+
+<script src="src/js/headercontroller.js"></script>
+<script src="src/js/scripts.js"></script>
+
+
+
+</body>
+</html>
