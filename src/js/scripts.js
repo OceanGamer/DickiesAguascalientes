@@ -423,6 +423,30 @@
       return finalImages;
     }
 
+    // Helper: obtener solo la primera imagen del producto (thumbnail) sin
+    // forzar la resolución de todas las imágenes. Esto evita descargar
+    // todas las miniaturas cuando sólo se renderiza la tarjeta <article>.
+    async function getProductThumbnail(indexZeroBased) {
+      // Primero intentar usar cache si existe
+      if (productImagesCache.has(indexZeroBased)) {
+        const cached = productImagesCache.get(indexZeroBased);
+        return Array.isArray(cached) && cached.length ? cached[0] : 'src/img/placeholder.png';
+      }
+      // Si en los datos del producto existe imageNames, usar la primera
+      const product = Array.isArray(loadedProducts) && loadedProducts[indexZeroBased];
+      if (product && Array.isArray(product.imageNames) && product.imageNames.length) {
+        const candidate = `src/img/products/${indexZeroBased + 1}/${product.imageNames[0]}`;
+        const ok = await tryLoadImage(candidate);
+        if (ok) return candidate;
+      }
+      // Fallback: intentar el primer archivo 1.png
+      const fallback = `src/img/products/${indexZeroBased + 1}/1.png`;
+      const ok2 = await tryLoadImage(fallback);
+      if (ok2) return fallback;
+      // Definitivo fallback
+      return 'src/img/placeholder.png';
+    }
+
     function buildWhatsAppLink(nombre, codigo) {
       const text = encodeURIComponent(`Hola quiero cotizar el producto ${nombre}${codigo ? ' (código ' + codigo + ')' : ''}`);
       return `https://wa.me/524495866828?text=${text}`;
@@ -466,10 +490,9 @@
 
         grid.appendChild(article);
 
-        // Cargar imagen (limitada) y datos para este producto
+        // Cargar solo la miniatura (primera imagen) y datos para este producto
         try {
-          const images = await getImagesForProduct(idx, 6); // solo 6 intentos por producto
-          const thumb = images[0] || 'src/img/placeholder.png';
+          const thumb = await getProductThumbnail(idx);
           const title = prod.nombre || 'Producto Dickies';
           const meta = [prod.codigo, prod.talla].filter(Boolean).join(' • ');
           const wp = buildWhatsAppLink(title, prod.codigo);
