@@ -541,7 +541,9 @@
     gap: 0;
     max-height: 90vh;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* momentum scrolling on iOS */
+    overscroll-behavior: contain; /* prevent parent from scrolling when reaching bounds */
   }
   
   .product-gallery {
@@ -769,6 +771,8 @@ body, button, input, select, textarea {
     padding:18px;
     height:100%;
     overflow:auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     border-left:1px solid var(--border-color);
   }
   .mobile-menu.open{display:flex}

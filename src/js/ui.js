@@ -10,6 +10,25 @@
     document.body.style.right = '0';
     document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
+
+    // Extra handling for iOS Safari: prevent background touchmove but allow scrolling
+    // inside designated scrollable containers (like modal body and mobile sheet).
+    try {
+      const ua = navigator && navigator.userAgent || '';
+      const isIOS = /iP(ad|hone|od)|Macintosh/.test(ua) && 'ontouchend' in document;
+      if (isIOS) {
+        // handler that prevents touchmove except when the target is inside an allow-list
+        window.__DA_UI__touchHandler = function(e){
+          const allow = e.target.closest && e.target.closest('.modal-body, .product-details, .mobile-menu .sheet, .thumbnail-container, .sheet');
+          if (!allow) {
+            e.preventDefault();
+          }
+        };
+        document.addEventListener('touchmove', window.__DA_UI__touchHandler, { passive: false });
+      }
+    } catch (err) {
+      // ignore environment where navigator isn't available
+    }
   }
   function safeUnlockScroll(){
     const saved = parseInt(document.body.dataset.savedScroll || '0', 10);
@@ -19,6 +38,14 @@
     document.body.style.right = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
+    // remove iOS touch handler if installed
+    try {
+      if (window.__DA_UI__touchHandler) {
+        document.removeEventListener('touchmove', window.__DA_UI__touchHandler, { passive: false });
+        delete window.__DA_UI__touchHandler;
+      }
+    } catch (err) {}
+
     window.requestAnimationFrame(() => {
       window.scrollTo(0, saved);
       delete document.body.dataset.savedScroll;
