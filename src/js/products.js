@@ -299,7 +299,7 @@
     }
     const results = await Promise.all(attempts);
     const images = results.filter(Boolean);
-    const finalImages = images.length ? images : ['src/img/placeholder.svg'];
+    const finalImages = images.length ? images : ['src/img/placeholder.webp'];
     productImagesCache.set(indexZeroBased, finalImages);
     return finalImages;
   }
@@ -307,7 +307,7 @@
   async function getProductThumbnail(indexZeroBased){
     if (productImagesCache.has(indexZeroBased)){
       const cached = productImagesCache.get(indexZeroBased);
-      return Array.isArray(cached) && cached.length ? cached[0] : 'src/img/placeholder.svg';
+      return Array.isArray(cached) && cached.length ? cached[0] : 'src/img/placeholder.webp';
     }
     const product = Array.isArray(loadedProducts) && loadedProducts[indexZeroBased];
     if (product && Array.isArray(product.imageNames) && product.imageNames.length){
@@ -318,7 +318,7 @@
     const fallback = `src/img/products/${indexZeroBased+1}/1.png`;
     const ok2 = await tryLoadImage(fallback);
     if (ok2) return fallback;
-    return 'src/img/placeholder.svg';
+    return 'src/img/placeholder.webp';
   }
 
   function buildWhatsAppLink(nombre, codigo){
@@ -393,13 +393,13 @@
     if (modalDescription) modalDescription.textContent = description;
     if (modalFeatures) modalFeatures.innerHTML = features.length ? `\n        <h3>Características principales</h3>\n        <ul>\n          ${features.map(f => `<li>${f}</li>`).join('')}\n        </ul>` : '';
     if (modalWhatsApp) modalWhatsApp.href = buildWhatsAppLink(title, product.codigo);
-    if (modalMainImage) { modalMainImage.src = 'src/img/placeholder.svg'; modalMainImage.alt = title; }
+    if (modalMainImage) { modalMainImage.src = 'src/img/placeholder.webp'; modalMainImage.alt = title; }
     if (thumbnailContainer) thumbnailContainer.innerHTML = '';
     if (productModal) { productModal.classList.add('open'); productModal.setAttribute('aria-hidden','false'); window.__DA_UI && window.__DA_UI.safeLockScroll(); }
     try{
       const images = await getImagesForProduct(indexZeroBased);
       if (modalActiveIndex !== indexZeroBased) return;
-      if (modalMainImage) modalMainImage.src = images[0] || 'src/img/placeholder.svg';
+      if (modalMainImage) modalMainImage.src = images[0] || 'src/img/placeholder.webp';
       if (thumbnailContainer) {
         thumbnailContainer.innerHTML = '';
         images.forEach((src, i) => {
