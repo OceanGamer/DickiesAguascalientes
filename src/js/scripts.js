@@ -1,5 +1,195 @@
 // --- Small JS comportamiento y accesibilidad ---
 (function(){
+    // --- Datos de productos integrados localmente (antes en productsInfo.json) ---
+    const productsInfo = [
+        {
+          "nombre": "Dickies Shorts de Trabajo 42283",
+          "codigo": "42283DN",
+          "talla": "32 / 13",
+          "descripcion_e_informacion_breve_del_producto": "Shorts de trabajo originales de Dickies.",
+          "categoria": "Shorts de trabajo",
+          "caracteristicas": [
+            "Tela duradera de sarga",
+            "Resistente a arrugas y manchas",
+            "Ajuste espacioso",
+            "Bolsillos frontales y traseros",
+            "Logo de la marca en la pierna"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo Ajustado",
+          "codigo": "874",
+          "talla": "32 / 29",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 874, ideal para el trabajo o uso diario.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte ajustado que se asienta en la cintura",
+            "Tela duradera de sarga",
+            "Resistente a arrugas y manchas",
+            "Bolsillos frontales y traseros",
+            "Logo de la marca en la parte lateral"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo Ajustado",
+          "codigo": "874DS",
+          "talla": "30 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 874, ideal para el trabajo o uso diario.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte ajustado que se asienta en la cintura",
+            "Tela duradera de sarga",
+            "Resistente a arrugas y manchas",
+            "Bolsillos frontales y traseros",
+            "Logo de la marca en la parte trasera"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo Original",
+          "codigo": "874",
+          "talla": "32 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 874, ideal para el uso diario y el trabajo.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte recto",
+            "Tejido duradero de sarga",
+            "Resistente a arrugas y manchas",
+            "Se asienta cómodamente en la cintura",
+            "Bolsillos frontales y traseros",
+            "Logo de la marca en la parte trasera"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo 'Double Knee'",
+          "codigo": "85283DN",
+          "talla": "42 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 'Double Knee' ideal para trabajos de alto impacto.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Ajuste relajado",
+            "Refuerzo de doble capa en las rodillas",
+            "Tela resistente a arrugas y manchas",
+            "Bolsillos frontales, traseros y uno pequeño en el costado de la pierna"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón Cargo de Trabajo",
+          "codigo": "WP592DS",
+          "talla": "30 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón cargo de trabajo Dickies con gran capacidad de almacenamiento.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte amplio y recto",
+            "Tela duradera de sarga",
+            "Resistente a arrugas y manchas",
+            "Bolsillos cargo en los costados",
+            "Bolsillos frontales y traseros"
+          ]
+        },
+        {
+          "nombre": "Dickies Jeans de Trabajo 'Carpenter'",
+          "codigo": "1993",
+          "talla": "34 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Jeans de trabajo Dickies ideales para el trabajo manual.",
+          "categoria": "Jeans de trabajo",
+          "caracteristicas": [
+            "Corte de carpintero con ajuste relajado",
+            "Pierna recta",
+            "Fabricados en denim duradero",
+            "Resistentes para el uso rudo",
+            "Costuras reforzadas",
+            "Múltiples bolsillos y lazo para martillo",
+            "Logo de Dickies en la parte trasera"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo 'Skinny Straight'",
+          "codigo": "WP801DS",
+          "talla": "28 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo 'Skinny Straight' de Dickies, ideal para un estilo versátil.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte moderno y ajustado",
+            "Durabilidad de la ropa de trabajo tradicional",
+            "Tela resistente a arrugas y manchas",
+            "Bolsillos frontales y traseros",
+            "Logo de Dickies en la parte trasera"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo 'Skinny Straight'",
+          "codigo": "WP801DN",
+          "talla": "28 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo 'Skinny Straight' de Dickies ideal para quienes buscan un look más contemporáneo sin sacrificar la funcionalidad.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte ajustado y moderno",
+            "Versión más estilizada de la ropa de trabajo clásica",
+            "Resistente a arrugas y manchas",
+            "Bolsillos frontales y traseros"
+          ]
+        },
+        {
+          "nombre": "Dickies Camisa de Trabajo de Manga Corta",
+          "codigo": "574",
+          "talla": "S",
+          "descripcion_e_informacion_breve_del_producto": "Camisa de trabajo original de Dickies, ideal para el trabajo o el uso casual.",
+          "categoria": "Camisas de trabajo",
+          "caracteristicas": [
+            "Manga corta y corte amplio",
+            "Tela resistente a arrugas y manchas",
+            "Dos bolsillos frontales con solapa",
+            "Cierre de botones",
+            "Logo de la marca en la parte inferior"
+          ]
+        },
+        {
+          "nombre": "Dickies Camisa de Trabajo de Manga Corta",
+          "codigo": "574",
+          "talla": "XL",
+          "descripcion_e_informacion_breve_del_producto": "Camisa de trabajo original de Dickies con un corte amplio.",
+          "categoria": "Camisas de trabajo",
+          "caracteristicas": [
+            "Ajuste cómodo",
+            "Manga corta",
+            "Tela de sarga duradera",
+            "Resistente a las arrugas y a las manchas",
+            "Dos bolsillos en el pecho con solapa",
+            "Botones a presión",
+            "Logo de la marca en la parte inferior delantera"
+          ]
+        },
+        {
+          "nombre": "Dickies Camisa de Trabajo de Manga Larga",
+          "codigo": "574",
+          "talla": "S",
+          "descripcion_e_informacion_breve_del_producto": "Camisa de trabajo original de Dickies, ideal para el trabajo o el uso casual.",
+          "categoria": "Camisas de trabajo",
+          "caracteristicas": [
+            "Corte amplio y manga larga",
+            "Mayor comodidad y protección",
+            "Tela duradera",
+            "Resistente a arrugas y manchas",
+            "Dos bolsillos en el pecho con solapa",
+            "Cierre de botones",
+            "Logo de la marca en la parte inferior"
+          ]
+        },
+        {
+          "nombre": "Dickies Pantalón de Trabajo 'Loose Fit'",
+          "codigo": "85283DS",
+          "talla": "38 / 32",
+          "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo Dickies 'Loose Fit' ideal para el trabajo diario.",
+          "categoria": "Pantalones de trabajo",
+          "caracteristicas": [
+            "Corte amplio y pierna recta",
+            "Ajuste holgado para libertad de movimiento",
+            "Tela duradera de sarga",
+            "Resistente a las arrugas y manchas",
+            "Bolsillos frontales, traseros y un bolsillo lateral pequeño"
+          ]
+        }
+    ];
     // Mobile menu toggle behavior
     const menuToggle = document.getElementById('menuToggle');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -94,123 +284,132 @@
     const modalWhatsApp = document.getElementById('modalWhatsApp');
     const thumbnailContainer = document.getElementById('thumbnailContainer');
 
-    // Product data
-    const productData = {
-      'pantalones-874': {
-        title: 'Pantalones Dickies 874',
-        meta: 'Tallas: 28-42',
-        description: 'Los pantalones Dickies 874 son el estándar de la industria para trabajo pesado. Con más de 50 años de historia, estos pantalones han sido probados en los entornos más exigentes.',
-        features: [
-          'Tela de algodón 100% resistente',
-          'Corte clásico y cómodo',
-          'Refuerzos en rodillas y asiento',
-          'Bolsillos laterales y traseros',
-          'Cierre con botones metálicos',
-          'Disponible en múltiples colores'
-        ],
-        images: [
-          'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop'
-        ],
-        whatsappText: 'Hola%20quiero%20cotizar%20los%20Pantalones%20874%20Dickies'
-      },
-      'chamarra-eisenhower': {
-        title: 'Chamarra Eisenhower Dickies',
-        meta: 'Tallas: S-XXL',
-        description: 'La chamarra Eisenhower de Dickies combina estilo militar clásico con funcionalidad moderna. Perfecta para trabajo y uso casual.',
-        features: [
-          'Tela de algodón/poliéster resistente',
-          'Corte militar clásico',
-          'Cierre con botones metálicos',
-          'Bolsillos frontales con solapa',
-          'Forro interior suave',
-          'Diseño atemporal y versátil'
-        ],
-        images: [
-          'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=500&h=500&fit=crop'
-        ],
-        whatsappText: 'Hola%20quiero%20cotizar%20la%20Chamarra%20Eisenhower%20Dickies'
-      },
-      'sudaderas-hoodies': {
-        title: 'Sudaderas y Hoodies Dickies',
-        meta: 'Tallas: S-XXL',
-        description: 'Mantente cómodo y con estilo con nuestra colección de sudaderas y hoodies Dickies. Perfectos para trabajo y tiempo libre.',
-        features: [
-          'Tela de algodón/poliéster suave',
-          'Corte cómodo y relajado',
-          'Capucha ajustable con cordones',
-          'Bolsillo canguro frontal',
-          'Puños y cintura elásticos',
-          'Logo Dickies bordado'
-        ],
-        images: [
-          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop'
-        ],
-        whatsappText: 'Hola%20quiero%20cotizar%20las%20Sudaderas%20y%20Hoodies%20Dickies'
-      },
-      'camisas-work': {
-        title: 'Camisas Work Dickies',
-        meta: 'Tallas: S-XXL',
-        description: 'Las camisas de trabajo Dickies están diseñadas para resistir las condiciones más exigentes mientras mantienen un aspecto profesional.',
-        features: [
-          'Tela de algodón resistente',
-          'Corte clásico de trabajo',
-          'Cierre con botones metálicos',
-          'Bolsillo de pecho con solapa',
-          'Refuerzos en puntos de tensión',
-          'Fácil cuidado y mantenimiento'
-        ],
-        images: [
-          'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&h=500&fit=crop'
-        ],
-        whatsappText: 'Hola%20quiero%20cotizar%20las%20Camisas%20Work%20Dickies'
-      },
-      'accesorios': {
-        title: 'Accesorios Dickies',
-        meta: 'Cinturones, gorras y parches',
-        description: 'Completa tu outfit Dickies con nuestros accesorios de calidad. Desde cinturones resistentes hasta gorras con estilo.',
-        features: [
-          'Cinturones de cuero genuino',
-          'Gorras con logo bordado',
-          'Parches y insignias oficiales',
-          'Calidad duradera',
-          'Estilo auténtico Dickies',
-          'Perfectos para completar el look'
-        ],
-        images: [
-          'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=500&h=500&fit=crop'
-        ],
-        whatsappText: 'Hola%20quiero%20cotizar%20los%20Accesorios%20Dickies'
-      },
-      'worktech': {
-        title: 'Colección WorkTech Dickies',
-        meta: 'Prendas que respiran • Desde $799',
-        description: 'La tecnología WorkTech de Dickies combina comodidad y funcionalidad con materiales que respiran y se adaptan a tu cuerpo.',
-        features: [
-          'Tecnología de respirabilidad',
-          'Materiales de secado rápido',
-          'Corte ergonómico',
-          'Resistente a manchas',
-          'Comfort todo el día',
-          'Ideal para trabajo activo'
-        ],
-        images: [
-          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop',
-          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&h=500&fit=crop'
-        ],
-        whatsappText: 'Hola%20quiero%20cotizar%20la%20Colección%20WorkTech%20Dickies'
+    // Productos dinámicos: carga desde JSON y usa imágenes locales por carpeta
+    let loadedProducts = [];
+    let productImagesCache = new Map();
+
+    async function fetchProducts() {
+      // Usar los datos locales integrados
+      loadedProducts = Array.isArray(productsInfo) ? productsInfo : [];
+    }
+
+    function tryLoadImage(url) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(url);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+    }
+
+    async function getImagesForProduct(indexZeroBased) {
+      if (productImagesCache.has(indexZeroBased)) {
+        return productImagesCache.get(indexZeroBased);
       }
-    };
+      const folderIndex = indexZeroBased + 1; // carpetas 1..N
+      const base = `src/img/products/${folderIndex}/`;
+      // Intentar un rango razonable de archivos 1..60.png
+      const attempts = [];
+      for (let i = 1; i <= 60; i++) {
+        attempts.push(tryLoadImage(`${base}${i}.png`));
+      }
+      const results = await Promise.all(attempts);
+      const images = results.filter(Boolean);
+      // Si no se encontró nada, usar un placeholder genérico si existe
+      const finalImages = images.length > 0 ? images : ['src/img/placeholder.png'];
+      productImagesCache.set(indexZeroBased, finalImages);
+      return finalImages;
+    }
+
+    function buildWhatsAppLink(nombre, codigo) {
+      const text = encodeURIComponent(`Hola quiero cotizar el producto ${nombre}${codigo ? ' (código ' + codigo + ')' : ''}`);
+      return `https://wa.me/524495866828?text=${text}`;
+    }
+
+    async function renderProductsGrid() {
+      const grid = document.querySelector('.products-grid');
+      if (!grid) return;
+      if (!loadedProducts.length) {
+        return; // dejar el contenido estático si no hay datos
+      }
+
+      const cards = await Promise.all(loadedProducts.map(async (prod, idx) => {
+        const images = await getImagesForProduct(idx);
+        const thumb = images[0];
+        const title = prod.nombre || 'Producto Dickies';
+        const meta = [prod.codigo, prod.talla].filter(Boolean).join(' • ');
+        const wp = buildWhatsAppLink(title, prod.codigo);
+        return `
+        <article class="product" role="listitem">
+          <div class="thumb">
+            <img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="info">
+            <div class="title">${title}</div>
+            <div class="meta">${meta}</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product-index="${idx}">Más info</a>
+              <a class="btn" href="${wp}" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>
+        </article>`;
+      }));
+
+      grid.innerHTML = cards.join('\n');
+
+      // Enlazar eventos de apertura de modal
+      grid.querySelectorAll('[data-product-index]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          const idx = parseInt(btn.getAttribute('data-product-index'), 10);
+          await openProductModalByIndex(idx);
+        });
+      });
+    }
+
+    async function openProductModalByIndex(indexZeroBased) {
+      const product = loadedProducts[indexZeroBased];
+      if (!product) return;
+
+      const images = await getImagesForProduct(indexZeroBased);
+      const title = product.nombre || '';
+      const meta = [product.categoria, product.talla, product.codigo].filter(Boolean).join(' • ');
+      const description = product.descripcion_e_informacion_breve_del_producto || '';
+      const features = Array.isArray(product.caracteristicas) ? product.caracteristicas : [];
+
+      modalTitle.textContent = title;
+      modalMeta.textContent = meta;
+      modalDescription.textContent = description;
+
+      modalFeatures.innerHTML = features.length ? `
+        <h3>Características principales</h3>
+        <ul>
+          ${features.map(f => `<li>${f}</li>`).join('')}
+        </ul>` : '';
+
+      modalWhatsApp.href = buildWhatsAppLink(title, product.codigo);
+
+      // Imágenes
+      modalMainImage.src = images[0] || '';
+      modalMainImage.alt = title;
+      thumbnailContainer.innerHTML = '';
+      images.forEach((src, i) => {
+        const th = document.createElement('img');
+        th.src = src;
+        th.alt = `${title} - Imagen ${i + 1}`;
+        th.className = i === 0 ? 'active' : '';
+        th.addEventListener('click', () => {
+          modalMainImage.src = src;
+          thumbnailContainer.querySelectorAll('img').forEach(img => img.classList.remove('active'));
+          th.classList.add('active');
+        });
+        thumbnailContainer.appendChild(th);
+      });
+
+      productModal.classList.add('open');
+      productModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
 
     function openProductModal(productId) {
       const product = productData[productId];
@@ -263,14 +462,7 @@
       document.body.style.overflow = '';
     }
 
-    // Event listeners for modal
-    document.querySelectorAll('[data-product]').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const productId = button.getAttribute('data-product');
-        openProductModal(productId);
-      });
-    });
+    // Event listeners para modal (dinámico: se agregan tras render)
 
     modalClose.addEventListener('click', closeProductModal);
     modalOverlay.addEventListener('click', closeProductModal);
@@ -339,6 +531,17 @@
       document.addEventListener('DOMContentLoaded', initScrollAnimations);
     } else {
       initScrollAnimations();
+    }
+
+    // Inicializar productos dinámicos
+    async function initProducts(){
+      await fetchProducts();
+      await renderProductsGrid();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProducts);
+    } else {
+      initProducts();
     }
 
   })();

@@ -1,0 +1,189 @@
+[
+    {
+      "nombre": "Dickies Shorts de Trabajo 42283",
+      "codigo": "42283DN",
+      "talla": "32 / 13",
+      "descripcion_e_informacion_breve_del_producto": "Shorts de trabajo originales de Dickies.",
+      "categoria": "Shorts de trabajo",
+      "caracteristicas": [
+        "Tela duradera de sarga",
+        "Resistente a arrugas y manchas",
+        "Ajuste espacioso",
+        "Bolsillos frontales y traseros",
+        "Logo de la marca en la pierna"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo Ajustado",
+      "codigo": "874",
+      "talla": "32 / 29",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 874, ideal para el trabajo o uso diario.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte ajustado que se asienta en la cintura",
+        "Tela duradera de sarga",
+        "Resistente a arrugas y manchas",
+        "Bolsillos frontales y traseros",
+        "Logo de la marca en la parte lateral"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo Ajustado",
+      "codigo": "874DS",
+      "talla": "30 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 874, ideal para el trabajo o uso diario.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte ajustado que se asienta en la cintura",
+        "Tela duradera de sarga",
+        "Resistente a arrugas y manchas",
+        "Bolsillos frontales y traseros",
+        "Logo de la marca en la parte trasera"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo Original",
+      "codigo": "874",
+      "talla": "32 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 874, ideal para el uso diario y el trabajo.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte recto",
+        "Tejido duradero de sarga",
+        "Resistente a arrugas y manchas",
+        "Se asienta cómodamente en la cintura",
+        "Bolsillos frontales y traseros",
+        "Logo de la marca en la parte trasera"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo 'Double Knee'",
+      "codigo": "85283DN",
+      "talla": "42 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo original Dickies 'Double Knee' ideal para trabajos de alto impacto.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Ajuste relajado",
+        "Refuerzo de doble capa en las rodillas",
+        "Tela resistente a arrugas y manchas",
+        "Bolsillos frontales, traseros y uno pequeño en el costado de la pierna"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón Cargo de Trabajo",
+      "codigo": "WP592DS",
+      "talla": "30 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón cargo de trabajo Dickies con gran capacidad de almacenamiento.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte amplio y recto",
+        "Tela duradera de sarga",
+        "Resistente a arrugas y manchas",
+        "Bolsillos cargo en los costados",
+        "Bolsillos frontales y traseros"
+      ]
+    },
+    {
+      "nombre": "Dickies Jeans de Trabajo 'Carpenter'",
+      "codigo": "1993",
+      "talla": "34 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Jeans de trabajo Dickies ideales para el trabajo manual.",
+      "categoria": "Jeans de trabajo",
+      "caracteristicas": [
+        "Corte de carpintero con ajuste relajado",
+        "Pierna recta",
+        "Fabricados en denim duradero",
+        "Resistentes para el uso rudo",
+        "Costuras reforzadas",
+        "Múltiples bolsillos y lazo para martillo",
+        "Logo de Dickies en la parte trasera"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo 'Skinny Straight'",
+      "codigo": "WP801DS",
+      "talla": "28 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo 'Skinny Straight' de Dickies, ideal para un estilo versátil.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte moderno y ajustado",
+        "Durabilidad de la ropa de trabajo tradicional",
+        "Tela resistente a arrugas y manchas",
+        "Bolsillos frontales y traseros",
+        "Logo de Dickies en la parte trasera"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo 'Skinny Straight'",
+      "codigo": "WP801DN",
+      "talla": "28 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo 'Skinny Straight' de Dickies ideal para quienes buscan un look más contemporáneo sin sacrificar la funcionalidad.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte ajustado y moderno",
+        "Versión más estilizada de la ropa de trabajo clásica",
+        "Resistente a arrugas y manchas",
+        "Bolsillos frontales y traseros"
+      ]
+    },
+    {
+      "nombre": "Dickies Camisa de Trabajo de Manga Corta",
+      "codigo": "574",
+      "talla": "S",
+      "descripcion_e_informacion_breve_del_producto": "Camisa de trabajo original de Dickies, ideal para el trabajo o el uso casual.",
+      "categoria": "Camisas de trabajo",
+      "caracteristicas": [
+        "Manga corta y corte amplio",
+        "Tela resistente a arrugas y manchas",
+        "Dos bolsillos frontales con solapa",
+        "Cierre de botones",
+        "Logo de la marca en la parte inferior"
+      ]
+    },
+    {
+      "nombre": "Dickies Camisa de Trabajo de Manga Corta",
+      "codigo": "574",
+      "talla": "XL",
+      "descripcion_e_informacion_breve_del_producto": "Camisa de trabajo original de Dickies con un corte amplio.",
+      "categoria": "Camisas de trabajo",
+      "caracteristicas": [
+        "Ajuste cómodo",
+        "Manga corta",
+        "Tela de sarga duradera",
+        "Resistente a las arrugas y a las manchas",
+        "Dos bolsillos en el pecho con solapa",
+        "Botones a presión",
+        "Logo de la marca en la parte inferior delantera"
+      ]
+    },
+    {
+      "nombre": "Dickies Camisa de Trabajo de Manga Larga",
+      "codigo": "574",
+      "talla": "S",
+      "descripcion_e_informacion_breve_del_producto": "Camisa de trabajo original de Dickies, ideal para el trabajo o el uso casual.",
+      "categoria": "Camisas de trabajo",
+      "caracteristicas": [
+        "Corte amplio y manga larga",
+        "Mayor comodidad y protección",
+        "Tela duradera",
+        "Resistente a arrugas y manchas",
+        "Dos bolsillos en el pecho con solapa",
+        "Cierre de botones",
+        "Logo de la marca en la parte inferior"
+      ]
+    },
+    {
+      "nombre": "Dickies Pantalón de Trabajo 'Loose Fit'",
+      "codigo": "85283DS",
+      "talla": "38 / 32",
+      "descripcion_e_informacion_breve_del_producto": "Pantalón de trabajo Dickies 'Loose Fit' ideal para el trabajo diario.",
+      "categoria": "Pantalones de trabajo",
+      "caracteristicas": [
+        "Corte amplio y pierna recta",
+        "Ajuste holgado para libertad de movimiento",
+        "Tela duradera de sarga",
+        "Resistente a las arrugas y manchas",
+        "Bolsillos frontales, traseros y un bolsillo lateral pequeño"
+      ]
+    }
+  ]
