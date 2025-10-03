@@ -282,8 +282,40 @@
     const mobileMenu = document.getElementById('mobileMenu');
     const closeMobile = document.getElementById('closeMobile');
 
-  function showMobile(){ mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
-  function hideMobile(){ mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+  // Safe scroll lock helpers: preservan la posición del scroll y evitan
+  // que la página 'salte' o que el scroll no se restaure al cerrar modales.
+  function safeLockScroll(){
+    // Guardamos la posición en body para mayor compatibilidad y fijamos
+    // body en position:fixed para deshabilitar el scroll sin cambiar la
+    // posición visual de la página.
+    const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.dataset.savedScroll = String(scrollY);
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+  function safeUnlockScroll(){
+    // Restauramos estilos y desplazamos la ventana a la posición guardada.
+    const saved = parseInt(document.body.dataset.savedScroll || '0', 10);
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    // Ejecutar en el siguiente frame para asegurar que los estilos se apliquen
+    // y evitar saltos inesperados.
+    window.requestAnimationFrame(() => {
+      window.scrollTo(0, saved);
+      delete document.body.dataset.savedScroll;
+    });
+  }
+
+  function showMobile(){ mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); safeLockScroll(); }
+  function hideMobile(){ mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); safeUnlockScroll(); }
 
     if(menuToggle){
       menuToggle.addEventListener('click', showMobile);
@@ -563,9 +595,9 @@
         thumbnailContainer.appendChild(th);
       });
 
-      productModal.classList.add('open');
-      productModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+  productModal.classList.add('open');
+  productModal.setAttribute('aria-hidden', 'false');
+  safeLockScroll();
     }
 
     function openProductModal(productId) {
@@ -610,13 +642,13 @@
       // Show modal
       productModal.classList.add('open');
       productModal.setAttribute('aria-hidden', 'false');
-      lockBodyScroll();
+      safeLockScroll();
     }
 
     function closeProductModal() {
       productModal.classList.remove('open');
       productModal.setAttribute('aria-hidden', 'true');
-      unlockBodyScroll();
+      safeUnlockScroll();
     }
 
     // Event listeners para modal (dinámico: se agregan tras render)
@@ -640,13 +672,13 @@
     function showEmailModal() {
       emailModal.classList.add('open');
       emailModal.setAttribute('aria-hidden', 'false');
-      lockBodyScroll();
+      safeLockScroll();
     }
 
     function closeEmailModal() {
       emailModal.classList.remove('open');
       emailModal.setAttribute('aria-hidden', 'true');
-      unlockBodyScroll();
+      safeUnlockScroll();
     }
 
     // Event listeners for email modal
