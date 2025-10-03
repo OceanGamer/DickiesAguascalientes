@@ -195,8 +195,8 @@
     const mobileMenu = document.getElementById('mobileMenu');
     const closeMobile = document.getElementById('closeMobile');
 
-    function showMobile(){ mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); }
-    function hideMobile(){ mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); }
+  function showMobile(){ mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); lockBodyScroll(); }
+  function hideMobile(){ mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); unlockBodyScroll(); }
 
     if(menuToggle){
       menuToggle.addEventListener('click', showMobile);
@@ -287,6 +287,41 @@
     // Productos dinámicos: carga desde JSON y usa imágenes locales por carpeta
     let loadedProducts = [];
     let productImagesCache = new Map();
+
+    /* -------------------------- */
+    /* Helpers para comportamiento iOS / body scroll lock */
+    /* -------------------------- */
+    let scrollLocked = false;
+    const lockBodyScroll = () => {
+      if (scrollLocked) return;
+      document.documentElement.classList.add('no-scroll');
+      document.body.classList.add('no-scroll');
+      // Preserve current scroll position to avoid jump
+      const scrollY = window.scrollY || window.pageYOffset;
+      document.documentElement.style.top = `-${scrollY}px`;
+      document.documentElement.dataset.scrollY = String(scrollY);
+      scrollLocked = true;
+    };
+    const unlockBodyScroll = () => {
+      if (!scrollLocked) return;
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
+      const scrollY = parseInt(document.documentElement.dataset.scrollY || '0', 10);
+      document.documentElement.style.top = '';
+      window.scrollTo(0, scrollY);
+      delete document.documentElement.dataset.scrollY;
+      scrollLocked = false;
+    };
+
+    // Prevenir pinch-zoom / gesturestart en iOS Safari (no deshabilita totalmente zoom, pero evita ciertos gestos problemáticos)
+    function preventIOSGestures() {
+      window.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+      });
+      // También bloquear double-tap zoom a través de touchend handling opcional si es necesario
+    }
+    // Ejecutar en carga
+    preventIOSGestures();
 
     async function fetchProducts() {
       // Usar los datos locales integrados
@@ -486,13 +521,13 @@
       // Show modal
       productModal.classList.add('open');
       productModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      lockBodyScroll();
     }
 
     function closeProductModal() {
       productModal.classList.remove('open');
       productModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      unlockBodyScroll();
     }
 
     // Event listeners para modal (dinámico: se agregan tras render)
@@ -516,13 +551,13 @@
     function showEmailModal() {
       emailModal.classList.add('open');
       emailModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      lockBodyScroll();
     }
 
     function closeEmailModal() {
       emailModal.classList.remove('open');
       emailModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      unlockBodyScroll();
     }
 
     // Event listeners for email modal

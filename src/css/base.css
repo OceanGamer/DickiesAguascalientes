@@ -27,10 +27,38 @@
     -moz-osx-font-smoothing:grayscale;
     line-height:1.45;
     overflow-x: hidden;
+    /* Evitar comportamiento de rubber-band / overscroll en iOS cuando sea posible */
+    overscroll-behavior-y: contain;
     width: 100%;
   }
   a{color:inherit;text-decoration:none}
   img{max-width:100%;height:auto;display:block}
+
+/* ---------------------------------- */
+/* iOS / Mobile improvements         */
+/* ---------------------------------- */
+/* Evitar que elementos desborden y provoquen scroll horizontal en móviles */
+html, body { touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+
+/* Forzar que cualquier elemento que sobresalga se oculte en lugar de crear scroll horizontal */
+* { max-width: 100%; box-sizing: border-box; }
+
+/* Evitar zoom automático en iOS al enfocar inputs: asegurar font-size >= 16px */
+input, textarea, select, button { font-size: 16px; }
+
+/* Cuando un modal o el menú móvil estén abiertos, bloquear el scroll del body */
+.no-scroll { height: 100vh; overflow: hidden; position: relative; }
+
+/* Asegurar que contenedores scrollables usen un comportamiento suave en iOS */
+.thumbnail-container, .product-details, .mobile-menu .sheet { -webkit-overflow-scrolling: touch; }
+
+/* Evitar overscroll en contenedores que usan overflow */
+.product-details, .thumbnail-container, .mobile-menu .sheet { overscroll-behavior: contain; }
+
+/* Evitar zoom por doble-tap en iOS Safari cuando necesario (se gestiona también con meta viewport) */
+html, body, button, input, textarea, select { -webkit-touch-callout: none; }
+
+/* ---------------------------------- */
 
   /* --- Header / Navbar --- */
   .topbar{
