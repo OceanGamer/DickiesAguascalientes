@@ -806,20 +806,26 @@ body, button, input, select, textarea {
     box-shadow: 0 0 0 3px rgba(242, 194, 0, 0.1);
   }
   
-  /* Scrollbar styling for dark theme */
-  ::-webkit-scrollbar {
-    width: 8px;
+  /* Global scrollbar styling (WebKit) - applies to all scrollable elements */
+  *::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
   }
-  ::-webkit-scrollbar-track {
-    background: var(--dark-secondary);
+  *::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
   }
-  ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
-    border-radius: 4px;
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+    border-radius: 12px;
+    border: 3px solid rgba(0,0,0,0.06);
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--muted);
+  *::-webkit-scrollbar-thumb:hover {
+    filter: brightness(0.92);
   }
+
+  /* Firefox global scrollbar settings */
+  html { scrollbar-width: thin; scrollbar-color: var(--accent) rgba(255,255,255,0.03); }
 
   /* Scroll animations */
   .fade-in {
@@ -1070,3 +1076,34 @@ body, button, input, select, textarea {
 
   /* Highlight used when scrolling to product card */
   .product.highlight { box-shadow: 0 12px 36px rgba(242,194,0,0.12); transform: translateY(-6px); border-color: rgba(242,194,0,0.18); }
+
+  /* Custom scrollbars: WebKit and Firefox */
+  /* Utility class for scrollable panels */
+  .scrollable-panel {
+    max-height: 56vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* WebKit browsers */
+  .scrollable-panel::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  .scrollable-panel::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+  }
+  .scrollable-panel::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+    border-radius: 12px;
+    border: 3px solid rgba(0,0,0,0.06);
+  }
+  .scrollable-panel::-webkit-scrollbar-thumb:hover {
+    filter: brightness(0.9);
+  }
+
+  /* Note: Firefox scrollbar settings are applied globally above (html selector). */
+
+  /* Apply to the search results container specifically to ensure consistent look */
+  .search-results.scrollable-panel { padding-right: 6px; }

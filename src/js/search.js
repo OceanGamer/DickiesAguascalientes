@@ -86,18 +86,23 @@
 
   function createResultsContainer(){
     if (resultsContainer) return resultsContainer;
-    const box = document.createElement('div');
-    box.className = 'search-results';
+  const box = document.createElement('div');
+  box.className = 'search-results scrollable-panel';
     // basic styles so it appears under the header input
     box.style.position = 'absolute';
     box.style.minWidth = '220px';
-    box.style.maxWidth = '420px';
-    box.style.background = 'white';
-    box.style.border = '1px solid rgba(0,0,0,0.08)';
-    box.style.boxShadow = '0 6px 18px rgba(0,0,0,0.08)';
-    box.style.zIndex = '1200';
-    box.style.padding = '6px 6px';
-    box.style.display = 'none';
+  box.style.maxWidth = '520px';
+  box.style.background = 'white';
+  box.style.border = '1px solid rgba(0,0,0,0.08)';
+  box.style.boxShadow = '0 8px 24px rgba(0,0,0,0.10)';
+  box.style.zIndex = '1200';
+  box.style.padding = '8px';
+  box.style.display = 'none';
+  // make results scrollable to allow many results without growing the page
+  box.style.maxHeight = '56vh';
+  box.style.overflowY = 'auto';
+  box.style.overflowX = 'hidden';
+  box.style.borderRadius = '8px';
     box.setAttribute('role','listbox');
     document.body.appendChild(box);
     resultsContainer = box;
@@ -132,7 +137,9 @@
       showResults();
       return;
     }
-    items.slice(0,12).forEach((it, i)=>{
+    // allow more results but keep a reasonable cap
+    const MAX_RESULTS = 40;
+    items.slice(0, MAX_RESULTS).forEach((it, i)=>{
       const row = document.createElement('button');
       row.type = 'button';
       row.className = 'search-result-item';
@@ -144,16 +151,20 @@
       row.style.width = '100%';
       row.style.border = '0';
       row.style.background = 'transparent';
-      row.style.padding = '8px 10px';
-      row.style.textAlign = 'left';
-      row.style.cursor = 'pointer';
+  // larger, touch-friendly rows
+  row.style.padding = '12px 14px';
+  row.style.textAlign = 'left';
+  row.style.cursor = 'pointer';
+  row.style.borderRadius = '6px';
+  row.style.marginBottom = '6px';
 
       const title = document.createElement('div');
-      title.style.fontWeight = '700';
-      title.style.fontSize = '14px';
-      const meta = document.createElement('div');
-      meta.style.fontSize = '12px';
-      meta.style.opacity = '0.8';
+  title.style.fontWeight = '800';
+  title.style.fontSize = '16px';
+  const meta = document.createElement('div');
+  meta.style.fontSize = '13px';
+  meta.style.opacity = '0.85';
+  meta.style.marginTop = '6px';
 
       if (it.type === 'product'){
         title.textContent = it.raw.nombre || 'Producto';
@@ -172,13 +183,13 @@
       // type badge
       const badge = document.createElement('span');
       badge.textContent = (it.type || 'item').toUpperCase();
-      badge.style.fontSize = '10px';
-      badge.style.padding = '4px 6px';
+  badge.style.fontSize = '11px';
+  badge.style.padding = '6px 8px';
       badge.style.borderRadius = '999px';
       badge.style.background = 'rgba(0,0,0,0.06)';
       badge.style.color = '#222';
       badge.style.marginBottom = '6px';
-      badge.style.fontWeight = '800';
+  badge.style.fontWeight = '800';
 
       row.appendChild(badge);
       row.appendChild(title);

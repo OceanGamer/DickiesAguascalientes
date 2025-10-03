@@ -27,11 +27,27 @@
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', function(e){
       const href = this.getAttribute('href');
+      // guard: require an id selector like #foo
+      if (!href || href === '#') return;
       const target = document.querySelector(href);
       if (target){
         e.preventDefault();
-        target.scrollIntoView({behavior:'smooth', block:'start'});
-        if(window.matchMedia('(max-width:700px)').matches) hideMobile();
+        // If mobile menu is open, close it first so body is unlocked and scrolling works.
+        const isMobile = window.matchMedia('(max-width:700px)').matches;
+        if (isMobile && mobileMenu && mobileMenu.classList.contains('open')){
+          // Close mobile menu (this will call safeUnlockScroll)
+          hideMobile();
+          // Defer the scroll until after the UI changes have applied and body is unlocked
+          if (window.requestAnimationFrame){
+            requestAnimationFrame(()=>{ requestAnimationFrame(()=> target.scrollIntoView({behavior:'smooth', block:'start'})); });
+          } else {
+            // Fallback small timeout
+            setTimeout(()=> target.scrollIntoView({behavior:'smooth', block:'start'}), 60);
+          }
+        } else {
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+          if(isMobile) hideMobile();
+        }
       }
     });
   });
