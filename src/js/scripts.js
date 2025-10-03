@@ -302,22 +302,31 @@
       });
     }
 
-    async function getImagesForProduct(indexZeroBased, maxAttempts = 6) {
-      // Devuelve la lista de imágenes existentes para un producto.
-      // Para evitar múltiples 404 y saturar GH Pages limitamos la cantidad de intentos por producto
+    async function getImagesForProduct(indexZeroBased, maxFind = 6) {
+      // Buscar imágenes dentro de la carpeta del producto con nombres globales j=1..60
+      // Hacemos comprobaciones secuenciales (await) para evitar ráfagas de peticiones simultáneas.
       if (productImagesCache.has(indexZeroBased)) {
         return productImagesCache.get(indexZeroBased);
       }
+
       const folderIndex = indexZeroBased + 1; // carpetas 1..N
-      const base = `src/img/products/${folderIndex}/`;
-      const attempts = [];
-      for (let i = 1; i <= maxAttempts; i++) {
-        attempts.push(tryLoadImage(`${base}${i}.png`));
+      const baseFolder = `src/img/products/${folderIndex}/`;
+      const imagesFound = [];
+
+      // Revisar j=1..60 secuencialmente, parar cuando tengamos maxFind imágenes
+      for (let j = 1; j <= 60 && imagesFound.length < maxFind; j++) {
+        try {
+          const url = `${baseFolder}${j}.png`;
+          const ok = await tryLoadImage(url);
+          if (ok) imagesFound.push(ok);
+        } catch (e) {
+          // Ignorar y continuar
+        }
       }
-      const results = await Promise.all(attempts);
-      const images = results.filter(Boolean);
-      // Si no se encontró nada, usar un placeholder genérico si existe
-      const finalImages = images.length > 0 ? images : ['src/img/placeholder.png'];
+
+      // Fallback: data-uri SVG neutro para evitar 404s en GH Pages
+      const transparentPlaceholder = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200"><rect width="100%" height="100%" fill="#f3f3f3"/></svg>';
+      const finalImages = imagesFound.length > 0 ? imagesFound : [transparentPlaceholder];
       productImagesCache.set(indexZeroBased, finalImages);
       return finalImages;
     }
@@ -368,7 +377,7 @@
         // Cargar imagen (limitada) y datos para este producto
         try {
           const images = await getImagesForProduct(idx, 6); // solo 6 intentos por producto
-          const thumb = images[0] || 'src/img/placeholder.png';
+          const thumb = images[0] || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200"><rect width="100%" height="100%" fill="#f3f3f3"/></svg>';
           const title = prod.nombre || 'Producto Dickies';
           const meta = [prod.codigo, prod.talla].filter(Boolean).join(' • ');
           const wp = buildWhatsAppLink(title, prod.codigo);
