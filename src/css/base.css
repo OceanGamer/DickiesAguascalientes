@@ -197,7 +197,7 @@
   .btn.ghost{background:transparent;color:#ffffff;border:2px solid rgba(255,255,255,0.6)}
 
   /* Main sections container */
-  main{margin:0 auto;padding:36px 18px 80px;background-color: var(--bg); width: 100%;}
+  main{margin:0 auto;padding:36px 18px 80px;background-color: var(--bg); width: 100%; overflow:hidden;}
 
   /* Section headings */
   .section-head{text-align:center;margin-bottom:40px}

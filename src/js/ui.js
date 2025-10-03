@@ -61,6 +61,19 @@
       entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, observerOptions);
     animatedElements.forEach(element => observer.observe(element));
+
+    // ALSO: for devices or situations where IO callbacks may be delayed (mobile reloads),
+    // eagerly mark elements already within the viewport as visible so they render immediately.
+    try{
+      animatedElements.forEach(el => {
+        const r = el.getBoundingClientRect();
+        const winH = window.innerHeight || document.documentElement.clientHeight;
+        // simple check: any part of element within viewport vertical range
+        if (r.top < winH && r.bottom > 0) {
+          el.classList.add('visible');
+        }
+      });
+    } catch(e) { /* ignore if DOM not ready */ }
   }
 
   // Expose to global namespace small API used by other modules
