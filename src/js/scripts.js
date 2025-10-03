@@ -14,6 +14,13 @@
             "Ajuste espacioso",
             "Bolsillos frontales y traseros",
             "Logo de la marca en la pierna"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
           ]
         },
         {
@@ -28,6 +35,13 @@
             "Resistente a arrugas y manchas",
             "Bolsillos frontales y traseros",
             "Logo de la marca en la parte lateral"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
           ]
         },
         {
@@ -42,6 +56,14 @@
             "Resistente a arrugas y manchas",
             "Bolsillos frontales y traseros",
             "Logo de la marca en la parte trasera"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png",
+            "6.png"
           ]
         },
         {
@@ -57,6 +79,13 @@
             "Se asienta cómodamente en la cintura",
             "Bolsillos frontales y traseros",
             "Logo de la marca en la parte trasera"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
           ]
         },
         {
@@ -70,6 +99,12 @@
             "Refuerzo de doble capa en las rodillas",
             "Tela resistente a arrugas y manchas",
             "Bolsillos frontales, traseros y uno pequeño en el costado de la pierna"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png"
           ]
         },
         {
@@ -84,6 +119,13 @@
             "Resistente a arrugas y manchas",
             "Bolsillos cargo en los costados",
             "Bolsillos frontales y traseros"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
           ]
         },
         {
@@ -100,6 +142,13 @@
             "Costuras reforzadas",
             "Múltiples bolsillos y lazo para martillo",
             "Logo de Dickies en la parte trasera"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
           ]
         },
         {
@@ -114,6 +163,13 @@
             "Tela resistente a arrugas y manchas",
             "Bolsillos frontales y traseros",
             "Logo de Dickies en la parte trasera"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png"
           ]
         },
         {
@@ -127,6 +183,15 @@
             "Versión más estilizada de la ropa de trabajo clásica",
             "Resistente a arrugas y manchas",
             "Bolsillos frontales y traseros"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png",
+            "5.png",
+            "6.png",
+            "7.png"
           ]
         },
         {
@@ -141,6 +206,11 @@
             "Dos bolsillos frontales con solapa",
             "Cierre de botones",
             "Logo de la marca en la parte inferior"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png"
           ]
         },
         {
@@ -157,6 +227,12 @@
             "Dos bolsillos en el pecho con solapa",
             "Botones a presión",
             "Logo de la marca en la parte inferior delantera"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png"
           ]
         },
         {
@@ -173,6 +249,12 @@
             "Dos bolsillos en el pecho con solapa",
             "Cierre de botones",
             "Logo de la marca en la parte inferior"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png",
+            "4.png"
           ]
         },
         {
@@ -187,6 +269,11 @@
             "Tela duradera de sarga",
             "Resistente a las arrugas y manchas",
             "Bolsillos frontales, traseros y un bolsillo lateral pequeño"
+          ],
+          "imageNames": [
+            "1.png",
+            "2.png",
+            "3.png"
           ]
         }
     ];
@@ -345,9 +432,18 @@
       }
       const folderIndex = indexZeroBased + 1; // carpetas 1..N
       const base = `src/img/products/${folderIndex}/`;
+      // Si el producto tiene una lista explícita de nombres de imagen, usarla (evita 404s y permite nombres personalizados)
+      const product = Array.isArray(loadedProducts) && loadedProducts[indexZeroBased];
       const attempts = [];
-      for (let i = 1; i <= maxAttempts; i++) {
-        attempts.push(tryLoadImage(`${base}${i}.png`));
+      if (product && Array.isArray(product.imageNames) && product.imageNames.length) {
+        for (const name of product.imageNames) {
+          attempts.push(tryLoadImage(`${base}${name}`));
+        }
+      } else {
+        // Intentar un rango razonable de archivos 1..maxAttempts.png
+        for (let i = 1; i <= maxAttempts; i++) {
+          attempts.push(tryLoadImage(`${base}${i}.png`));
+        }
       }
       const results = await Promise.all(attempts);
       const images = results.filter(Boolean);
