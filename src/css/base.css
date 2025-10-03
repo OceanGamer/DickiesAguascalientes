@@ -540,7 +540,8 @@
     grid-template-columns: 1fr 1fr;
     gap: 0;
     max-height: 90vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   
   .product-gallery {
@@ -1057,3 +1058,11 @@ body, button, input, select, textarea {
     pointer-events: none;
     z-index: -1;
   }
+
+  /* Search results dropdown styles (created dynamically) */
+  .search-results { border-radius:8px; overflow:hidden; }
+  .search-result-item { background: transparent; border: 0; }
+  .search-result-item:focus { outline: none; }
+
+  /* Highlight used when scrolling to product card */
+  .product.highlight { box-shadow: 0 12px 36px rgba(242,194,0,0.12); transform: translateY(-6px); border-color: rgba(242,194,0,0.18); }
