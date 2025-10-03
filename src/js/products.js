@@ -330,21 +330,23 @@
     const grid = document.querySelector('.products-grid');
     if (!grid) return;
     if (!loadedProducts.length) return;
+    // Fast initial render: create placeholders with data attrs and lightweight content
     grid.innerHTML = '';
     for (let idx=0; idx<loadedProducts.length; idx++){
       const prod = loadedProducts[idx];
       const article = document.createElement('article');
       article.className = 'product';
       article.setAttribute('role','listitem');
+      // Use data-product-index to wire interactions later
       article.innerHTML = `
-          <div class="thumb" style="background:#f3f3f3;min-height:160px;display:flex;align-items:center;justify-content:center;">
+          <div class="thumb" data-src-index="${idx}" style="background:#f3f3f3;min-height:160px;display:flex;align-items:center;justify-content:center;">
             <div style="width:40px;height:40px" class="thumb-spinner">
               <svg width="40" height="40" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.9s" repeatCount="indefinite"/></circle></svg>
             </div>
           </div>
           <div class="info">
-            <div class="title">Cargando...</div>
-            <div class="meta">&nbsp;</div>
+            <div class="title">${prod.nombre ? prod.nombre.split(' ').slice(0,6).join(' ') : 'Producto Dickies'}</div>
+            <div class="meta">${[prod.codigo, prod.talla].filter(Boolean).join(' • ') || '&nbsp;'}</div>
             <div class="actions">
               <a class="btn primary" href="#" data-product-index="${idx}">Más info</a>
               <a class="btn" href="#" target="_blank" style="border:1px solid #ddd">Cotizar</a>
@@ -353,17 +355,50 @@
       grid.appendChild(article);
       const initialBtn = article.querySelector('[data-product-index]');
       if (initialBtn) initialBtn.addEventListener('click', (e)=>{ e.preventDefault(); openProductModalByIndex(idx); });
+    }
+
+    // IntersectionObserver to lazy-load thumbnails; prioritize first N immediately
+    const PRIORITY = 3;
+    const thumbs = Array.from(grid.querySelectorAll('.thumb'));
+    const loadThumb = async (thumbEl, idx) => {
+      // avoid double-loading
+      if (thumbEl.dataset.loaded === '1') return;
+      thumbEl.dataset.loaded = '1';
       try{
         const thumb = await getProductThumbnail(idx);
+        const prod = loadedProducts[idx] || {};
         const title = prod.nombre || 'Producto Dickies';
-        const meta = [prod.codigo, prod.talla].filter(Boolean).join(' • ');
-        const wp = buildWhatsAppLink(title, prod.codigo);
-        article.querySelector('.thumb').innerHTML = `<img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">`;
-        article.querySelector('.title').textContent = title;
-        article.querySelector('.meta').textContent = meta;
-        const actions = article.querySelectorAll('.actions a'); if (actions[1]) actions[1].setAttribute('href', wp);
-      } catch(err){ console.warn('Error cargando producto', idx, err); }
-      await new Promise(r => setTimeout(r, 120));
+        thumbEl.innerHTML = `<img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">`;
+        // set whatsapp link for the actions
+        const article = thumbEl.closest('article');
+        if (article){
+          const wp = buildWhatsAppLink(title, prod.codigo);
+          const actions = article.querySelectorAll('.actions a'); if (actions[1]) actions[1].setAttribute('href', wp);
+        }
+      }catch(err){ console.warn('Error cargando thumb', idx, err); }
+    };
+
+    // eager-load first PRIORITY thumbnails
+    for (let i=0;i<Math.min(PRIORITY, thumbs.length);i++){
+      loadThumb(thumbs[i], i);
+    }
+
+    // lazy-load rest when near viewport
+    if ('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries, observer)=>{
+        entries.forEach(entry=>{
+          if (entry.isIntersecting){
+            const el = entry.target;
+            const idx = parseInt(el.getAttribute('data-src-index'),10);
+            loadThumb(el, idx);
+            observer.unobserve(el);
+          }
+        });
+      }, {rootMargin: '300px 0px 300px 0px', threshold: 0.01});
+      thumbs.forEach((t, i)=>{ if (i>=PRIORITY) io.observe(t); });
+    } else {
+      // Fallback: load all after small delay using idle time
+      setTimeout(()=>{ thumbs.forEach((t,i)=> loadThumb(t,i)); }, 600);
     }
   }
 

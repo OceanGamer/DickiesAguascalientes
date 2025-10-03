@@ -75,8 +75,9 @@
 
   <!-- HERO -->
   <section class="hero" aria-label="Inicio" style="position:relative;z-index:1;">
-    <video class="bg" id="heroBg" style="position:fixed;top:0;left:0;width:100%;height:100vh;object-fit:cover;z-index:-1;" autoplay muted loop playsinline>
-        <source src="src/vid/25-WWOF-19224_header_desktop_optimized.mp4" type="video/mp4">
+    <!-- Hero background: load source lazily via JS (improves LCP). Poster placeholder keeps visual stability -->
+    <video class="bg" id="heroBg" style="position:fixed;top:0;left:0;width:100%;height:100vh;object-fit:cover;z-index:-1;" muted loop playsinline preload="none" poster="src/img/placeholder.webp" data-src="src/vid/25-WWOF-19224_header_desktop_optimized.mp4">
+      <!-- Source will be appended by perf.js when appropriate -->
     </video>
     <!-- Hero Image Placeholder -->
     <div class="hero-image-placeholder" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;">
@@ -381,6 +382,7 @@
     </a>
   </div>
 
+<script src="src/js/perf.js" defer></script>
 <script src="src/js/headercontroller.js" defer></script>
 <script src="src/js/nav.js" defer></script>
 <script src="src/js/ui.js" defer></script>
