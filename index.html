@@ -240,7 +240,12 @@
 
       <div class="contact-grid fade-in">
         <div class="contact-card">
-          <form id="contactForm">
+          <form id="contactForm" action="https://formsubmit.co/oceanmods1008@gmail.com" method="POST">
+            <!-- FormSubmit (https://formsubmit.co) integration -->
+            <!-- When submitting, FormSubmit will email oceanmods1008@gmail.com -->
+            <!-- Optional: you can add a _next field to redirect after submit -->
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde web Dickies Aguascalientes">
+            <input type="hidden" name="_captcha" value="false">
             <label for="name" style="display:block;font-weight:700;margin-bottom:6px">Nombre</label>
             <input id="name" name="name" required style="width:100%;padding:10px;border-radius:6px;border:1px solid #ddd" />
 
@@ -282,8 +287,9 @@
             <strong>Extras</strong>
             <p class="muted" style="margin:8px 0 0">Catálogo descargable y guía de tallas.</p>
             <div style="margin-top:8px">
-              <a class="btn primary" href="#" download>Descargar catálogo (PDF)</a>
-            </div>
+                <!-- catalog download: JS will try to fetch and stream, fallback to href -->
+                <a id="catalogDownload" target="_blank" class="btn primary" href="src/assets/catalogo.pdf" download="catalogo-dickies.pdf">Descargar catálogo (PDF)</a>
+              </div>
           </div>
         </aside>
       </div>
@@ -295,7 +301,10 @@
   <footer>
     <div class="inner">
       <div>
-        <div style="font-weight:800;margin-bottom:8px">Dickies Aguascalientes</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+          <img src="src/img/logo.svg" alt="Logo Dickies" style="height:36px;width:auto;object-fit:contain" />
+          <div style="font-weight:800">Dickies Aguascalientes</div>
+        </div>
         <div class="muted" style="max-width:380px">Distribuidor autorizado. Dickies es una marca registrada de VF Corporation. Este sitio corresponde a un distribuidor autorizado en México.</div>
       </div>
 
@@ -388,6 +397,7 @@
 <script src="src/js/ui.js" defer></script>
 <script src="src/js/search.js" defer></script>
 <script src="src/js/products.js" defer></script>
+<script src="src/js/download.js" defer></script>
 <script src="src/js/main.js" defer></script>
 
 

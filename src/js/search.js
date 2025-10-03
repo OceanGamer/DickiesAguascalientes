@@ -120,9 +120,25 @@
     const box = createResultsContainer();
     if (!input) return;
     const rect = input.getBoundingClientRect();
-    box.style.left = (rect.left + window.scrollX) + 'px';
-    box.style.top = (rect.bottom + window.scrollY + 6) + 'px';
-    box.style.width = Math.min(rect.width, 420) + 'px';
+    const viewportW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    // On small screens, make the results full-width (minus small padding) and position under header
+    if (viewportW <= 700){
+      const pad = 12;
+      const maxW = viewportW - pad*2;
+      box.style.left = pad + 'px';
+      box.style.width = maxW + 'px';
+      box.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+    } else {
+      // try to keep the box aligned to the input, but prevent overflow on the right
+      const preferredLeft = rect.left + window.scrollX;
+      const preferredWidth = Math.min(rect.width, 520);
+      let left = preferredLeft;
+      // if it would overflow, shift left
+      if (left + preferredWidth > viewportW - 12) left = Math.max(12, viewportW - preferredWidth - 12);
+      box.style.left = left + 'px';
+      box.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+      box.style.width = preferredWidth + 'px';
+    }
   }
 
   function renderResults(items){

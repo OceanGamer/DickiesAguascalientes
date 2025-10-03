@@ -109,7 +109,18 @@
   // Contact form handling (opens mail client and shows email modal)
   const form = document.getElementById('contactForm');
   if (form){
+    // If the form posts to FormSubmit (formsubmit.co), allow native submission.
+    // Otherwise preserve legacy behavior that opens mail client via mailto:.
     form.addEventListener('submit', function(e){
+      const action = (form.getAttribute('action') || '').toLowerCase();
+      const isFormSubmit = action.includes('formsubmit.co');
+      if (isFormSubmit) {
+        // Let the browser submit the form natively to FormSubmit.
+        // We don't call preventDefault so the POST goes through.
+        return;
+      }
+
+      // Legacy fallback: open mail client and show confirmation modal
       e.preventDefault();
       const name = form.name.value || 'Cliente';
       const email = form.email.value || '';

@@ -738,6 +738,10 @@ body, button, input, select, textarea {
     .product-details h2 {
       font-size: 24px;
     }
+    /* Prevent iOS Safari from auto-zooming inputs by ensuring at least 16px font size */
+    input, textarea, select, .search-box input {
+      font-size: 16px !important;
+    }
   }
   @media (max-width:700px){
     .nav{gap:10px}
