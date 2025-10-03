@@ -299,7 +299,7 @@
     }
     const results = await Promise.all(attempts);
     const images = results.filter(Boolean);
-    const finalImages = images.length ? images : ['src/img/placeholder.webp'];
+    const finalImages = images.length ? images : [];
     productImagesCache.set(indexZeroBased, finalImages);
     return finalImages;
   }
@@ -307,7 +307,7 @@
   async function getProductThumbnail(indexZeroBased){
     if (productImagesCache.has(indexZeroBased)){
       const cached = productImagesCache.get(indexZeroBased);
-      return Array.isArray(cached) && cached.length ? cached[0] : 'src/img/placeholder.webp';
+      return Array.isArray(cached) && cached.length ? cached[0] : null;
     }
     const product = Array.isArray(loadedProducts) && loadedProducts[indexZeroBased];
     if (product && Array.isArray(product.imageNames) && product.imageNames.length){
@@ -318,7 +318,7 @@
     const fallback = `src/img/products/${indexZeroBased+1}/1.png`;
     const ok2 = await tryLoadImage(fallback);
     if (ok2) return fallback;
-    return 'src/img/placeholder.webp';
+    return null;
   }
 
   function buildWhatsAppLink(nombre, codigo){
@@ -364,11 +364,18 @@
       // avoid double-loading
       if (thumbEl.dataset.loaded === '1') return;
       thumbEl.dataset.loaded = '1';
-      try{
+        try{
         const thumb = await getProductThumbnail(idx);
         const prod = loadedProducts[idx] || {};
         const title = prod.nombre || 'Producto Dickies';
-        thumbEl.innerHTML = `<img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">`;
+        if (thumb) {
+          thumbEl.innerHTML = `<img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">`;
+        } else {
+          // show the same inline spinner used elsewhere
+          thumbEl.innerHTML = `<div class="thumb-spinner inline-spinner" aria-hidden="true">` +
+            `<svg width="40" height="40" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.9s" repeatCount="indefinite"/></circle></svg>`+
+          `</div>`;
+        }
         // set whatsapp link for the actions
         const article = thumbEl.closest('article');
         if (article){
@@ -428,13 +435,21 @@
     if (modalDescription) modalDescription.textContent = description;
     if (modalFeatures) modalFeatures.innerHTML = features.length ? `\n        <h3>Características principales</h3>\n        <ul>\n          ${features.map(f => `<li>${f}</li>`).join('')}\n        </ul>` : '';
     if (modalWhatsApp) modalWhatsApp.href = buildWhatsAppLink(title, product.codigo);
-    if (modalMainImage) { modalMainImage.src = 'src/img/placeholder.webp'; modalMainImage.alt = title; }
+  if (modalMainImage) { modalMainImage.removeAttribute('src'); modalMainImage.alt = title; modalMainImage.classList.add('placeholder-loading'); }
     if (thumbnailContainer) thumbnailContainer.innerHTML = '';
     if (productModal) { productModal.classList.add('open'); productModal.setAttribute('aria-hidden','false'); window.__DA_UI && window.__DA_UI.safeLockScroll(); }
     try{
       const images = await getImagesForProduct(indexZeroBased);
       if (modalActiveIndex !== indexZeroBased) return;
-      if (modalMainImage) modalMainImage.src = images[0] || 'src/img/placeholder.webp';
+      if (modalMainImage) {
+        if (images[0]){
+          modalMainImage.classList.remove('placeholder-loading');
+          modalMainImage.src = images[0];
+        } else {
+          modalMainImage.removeAttribute('src');
+          modalMainImage.classList.add('placeholder-loading');
+        }
+      }
       if (thumbnailContainer) {
         thumbnailContainer.innerHTML = '';
         images.forEach((src, i) => {

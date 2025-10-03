@@ -246,6 +246,11 @@
   aspect-ratio: 4 / 5;
   transition: transform 0.3s ease;
   }
+  /* Inline spinner used as placeholder while images load */
+  .inline-spinner{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+  .inline-spinner svg{opacity:0.9}
+  /* Modal main image placeholder state */
+  .placeholder-loading{background:linear-gradient(180deg,#111,#000);display:block;width:100%;height:100%;object-fit:cover}
   .product:hover .thumb img {
     transform: scale(1.05);
   }
