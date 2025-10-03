@@ -403,6 +403,9 @@
     const modalWhatsApp = document.getElementById('modalWhatsApp');
     const thumbnailContainer = document.getElementById('thumbnailContainer');
 
+  // Índice del producto actualmente mostrado en el modal (para evitar races)
+  let modalActiveIndex = null;
+
     // Productos dinámicos: carga desde JSON y usa imágenes locales por carpeta
     let loadedProducts = [];
     let productImagesCache = new Map();
@@ -522,6 +525,18 @@
 
         grid.appendChild(article);
 
+        // Registrar el listener del botón 'Más info' inmediatamente para que
+        // el usuario pueda abrir el modal aunque la tarjeta aún esté cargando.
+        const initialBtn = article.querySelector('[data-product-index]');
+        if (initialBtn) {
+          initialBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const i = parseInt(initialBtn.getAttribute('data-product-index'), 10);
+            // Abrir modal (la función abrirá imágenes en segundo plano)
+            openProductModalByIndex(i);
+          });
+        }
+
         // Cargar solo la miniatura (primera imagen) y datos para este producto
         try {
           const thumb = await getProductThumbnail(idx);
@@ -534,18 +549,7 @@
           article.querySelector('.title').textContent = title;
           article.querySelector('.meta').textContent = meta;
           const actions = article.querySelectorAll('.actions a');
-          if (actions[0]) actions[0].setAttribute('data-product-index', String(idx));
           if (actions[1]) actions[1].setAttribute('href', wp);
-
-          // Asociar evento abrir modal (capturamos el enlace 'Más info')
-          const btn = article.querySelector('[data-product-index]');
-          if (btn) {
-            btn.addEventListener('click', async (e) => {
-              e.preventDefault();
-              const i = parseInt(btn.getAttribute('data-product-index'), 10);
-              await openProductModalByIndex(i);
-            });
-          }
         } catch (err) {
           // En caso de error no bloqueamos el resto
           console.warn('Error cargando producto', idx, err);
@@ -560,44 +564,60 @@
       const product = loadedProducts[indexZeroBased];
       if (!product) return;
 
-      const images = await getImagesForProduct(indexZeroBased);
+      // Marcar índice activo para evitar que cargas asíncronas de otros
+      // índices sobrescriban el modal si el usuario abrió otro producto.
+      modalActiveIndex = indexZeroBased;
+
       const title = product.nombre || '';
       const meta = [product.categoria, product.talla, product.codigo].filter(Boolean).join(' • ');
       const description = product.descripcion_e_informacion_breve_del_producto || '';
       const features = Array.isArray(product.caracteristicas) ? product.caracteristicas : [];
 
+      // Mostrar datos básicos inmediatamente para que el modal aparezca rápido
       modalTitle.textContent = title;
       modalMeta.textContent = meta;
       modalDescription.textContent = description;
-
       modalFeatures.innerHTML = features.length ? `
         <h3>Características principales</h3>
         <ul>
           ${features.map(f => `<li>${f}</li>`).join('')}
         </ul>` : '';
-
       modalWhatsApp.href = buildWhatsAppLink(title, product.codigo);
 
-      // Imágenes
-      modalMainImage.src = images[0] || '';
+      // Placeholder mientras cargan las imágenes
+      modalMainImage.src = 'src/img/placeholder.png';
       modalMainImage.alt = title;
       thumbnailContainer.innerHTML = '';
-      images.forEach((src, i) => {
-        const th = document.createElement('img');
-        th.src = src;
-        th.alt = `${title} - Imagen ${i + 1}`;
-        th.className = i === 0 ? 'active' : '';
-        th.addEventListener('click', () => {
-          modalMainImage.src = src;
-          thumbnailContainer.querySelectorAll('img').forEach(img => img.classList.remove('active'));
-          th.classList.add('active');
-        });
-        thumbnailContainer.appendChild(th);
-      });
 
-  productModal.classList.add('open');
-  productModal.setAttribute('aria-hidden', 'false');
-  safeLockScroll();
+      // Mostrar modal de inmediato
+      productModal.classList.add('open');
+      productModal.setAttribute('aria-hidden', 'false');
+      safeLockScroll();
+
+      // Cargar imágenes en segundo plano y actualizar el modal cuando estén listas
+      try {
+        const images = await getImagesForProduct(indexZeroBased);
+        // Si el usuario abrió otro modal, abortar la actualización
+        if (modalActiveIndex !== indexZeroBased) return;
+
+        modalMainImage.src = images[0] || 'src/img/placeholder.png';
+        modalMainImage.alt = title;
+        thumbnailContainer.innerHTML = '';
+        images.forEach((src, i) => {
+          const th = document.createElement('img');
+          th.src = src;
+          th.alt = `${title} - Imagen ${i + 1}`;
+          th.className = i === 0 ? 'active' : '';
+          th.addEventListener('click', () => {
+            modalMainImage.src = src;
+            thumbnailContainer.querySelectorAll('img').forEach(img => img.classList.remove('active'));
+            th.classList.add('active');
+          });
+          thumbnailContainer.appendChild(th);
+        });
+      } catch (err) {
+        console.warn('Error cargando imágenes del producto para modal', indexZeroBased, err);
+      }
     }
 
     function openProductModal(productId) {
