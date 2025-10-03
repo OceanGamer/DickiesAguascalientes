@@ -751,6 +751,22 @@ body, button, input, select, textarea {
       grid-template-columns: 1fr;
       max-height: 85vh;
     }
+    /* Ensure products are visible on small screens even if other stacking contexts exist */
+    .products-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      position: relative !important;
+      z-index: 12 !important;
+    }
+    .product {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+      position: relative !important;
+      z-index: 12 !important;
+    }
   }
 
   /* Mobile menu (offcanvas) */
