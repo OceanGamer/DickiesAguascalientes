@@ -302,15 +302,16 @@
       });
     }
 
-    async function getImagesForProduct(indexZeroBased) {
+    async function getImagesForProduct(indexZeroBased, maxAttempts = 6) {
+      // Devuelve la lista de imágenes existentes para un producto.
+      // Para evitar múltiples 404 y saturar GH Pages limitamos la cantidad de intentos por producto
       if (productImagesCache.has(indexZeroBased)) {
         return productImagesCache.get(indexZeroBased);
       }
       const folderIndex = indexZeroBased + 1; // carpetas 1..N
       const base = `src/img/products/${folderIndex}/`;
-      // Intentar un rango razonable de archivos 1..60.png
       const attempts = [];
-      for (let i = 1; i <= 60; i++) {
+      for (let i = 1; i <= maxAttempts; i++) {
         attempts.push(tryLoadImage(`${base}${i}.png`));
       }
       const results = await Promise.all(attempts);
@@ -326,6 +327,7 @@
       return `https://wa.me/524495866828?text=${text}`;
     }
 
+    // Nuevo: renderizado progresivo de productos uno-a-uno
     async function renderProductsGrid() {
       const grid = document.querySelector('.products-grid');
       if (!grid) return;
@@ -333,38 +335,69 @@
         return; // dejar el contenido estático si no hay datos
       }
 
-      const cards = await Promise.all(loadedProducts.map(async (prod, idx) => {
-        const images = await getImagesForProduct(idx);
-        const thumb = images[0];
-        const title = prod.nombre || 'Producto Dickies';
-        const meta = [prod.codigo, prod.talla].filter(Boolean).join(' • ');
-        const wp = buildWhatsAppLink(title, prod.codigo);
-        return `
-        <article class="product" role="listitem">
-          <div class="thumb">
-            <img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">
-          </div>
-          <div class="info">
-            <div class="title">${title}</div>
-            <div class="meta">${meta}</div>
-            <div class="actions">
-              <a class="btn primary" href="#" data-product-index="${idx}">Más info</a>
-              <a class="btn" href="${wp}" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+      // Mostrar spinner mientras carga el primer producto
+      grid.innerHTML = '<div class="loader" aria-hidden="false" style="display:flex;justify-content:center;padding:40px">' +
+        '<svg width="36" height="36" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg>' +
+        '</div>';
+
+      // Renderizar productos uno a uno para evitar multitud de peticiones simultáneas
+      grid.innerHTML = '';
+      for (let idx = 0; idx < loadedProducts.length; idx++) {
+        const prod = loadedProducts[idx];
+        // Crear tarjeta vacía con placeholder visual
+        const article = document.createElement('article');
+        article.className = 'product';
+        article.setAttribute('role', 'listitem');
+        article.innerHTML = `
+          <div class="thumb" style="background:#f3f3f3;min-height:160px;display:flex;align-items:center;justify-content:center;">
+            <div style="width:40px;height:40px" class="thumb-spinner">
+              <svg width="40" height="40" viewBox="0 0 50 50" aria-hidden="true"><circle cx="25" cy="25" r="20" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.9s" repeatCount="indefinite"/></circle></svg>
             </div>
           </div>
-        </article>`;
-      }));
+          <div class="info">
+            <div class="title">Cargando...</div>
+            <div class="meta">&nbsp;</div>
+            <div class="actions">
+              <a class="btn primary" href="#" data-product-index="${idx}">Más info</a>
+              <a class="btn" href="#" target="_blank" style="border:1px solid #ddd">Cotizar</a>
+            </div>
+          </div>`;
 
-      grid.innerHTML = cards.join('\n');
+        grid.appendChild(article);
 
-      // Enlazar eventos de apertura de modal
-      grid.querySelectorAll('[data-product-index]').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-          e.preventDefault();
-          const idx = parseInt(btn.getAttribute('data-product-index'), 10);
-          await openProductModalByIndex(idx);
-        });
-      });
+        // Cargar imagen (limitada) y datos para este producto
+        try {
+          const images = await getImagesForProduct(idx, 6); // solo 6 intentos por producto
+          const thumb = images[0] || 'src/img/placeholder.png';
+          const title = prod.nombre || 'Producto Dickies';
+          const meta = [prod.codigo, prod.talla].filter(Boolean).join(' • ');
+          const wp = buildWhatsAppLink(title, prod.codigo);
+
+          // Reemplazar contenido del article con la info real
+          article.querySelector('.thumb').innerHTML = `<img src="${thumb}" alt="${title}" style="width:100%;height:100%;object-fit:cover">`;
+          article.querySelector('.title').textContent = title;
+          article.querySelector('.meta').textContent = meta;
+          const actions = article.querySelectorAll('.actions a');
+          if (actions[0]) actions[0].setAttribute('data-product-index', String(idx));
+          if (actions[1]) actions[1].setAttribute('href', wp);
+
+          // Asociar evento abrir modal (capturamos el enlace 'Más info')
+          const btn = article.querySelector('[data-product-index]');
+          if (btn) {
+            btn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const i = parseInt(btn.getAttribute('data-product-index'), 10);
+              await openProductModalByIndex(i);
+            });
+          }
+        } catch (err) {
+          // En caso de error no bloqueamos el resto
+          console.warn('Error cargando producto', idx, err);
+        }
+
+        // Pequeña pausa para no saturar requests en paralelo (throttle)
+        await new Promise(r => setTimeout(r, 120));
+      }
     }
 
     async function openProductModalByIndex(indexZeroBased) {
