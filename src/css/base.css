@@ -567,6 +567,12 @@
   object-fit: cover;
   border-radius: 12px;
   background: rgba(240, 240, 240, 0.8);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.main-image.loaded{
+  opacity: 1;
   }
   
   .thumbnail-container {

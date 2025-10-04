@@ -223,6 +223,10 @@
     resultsContainer.style.display = 'block';
   }
   function hideResults(){ if (resultsContainer) resultsContainer.style.display = 'none'; }
+  function clearSearch(){
+    const input = getSearchInput();
+    if (input){ input.value = ''; input.blur(); input.dispatchEvent(new Event('input')); }
+  }
 
   function onSelectResult(item){
     if (!item) return;
@@ -231,6 +235,7 @@
       if (window.__DA_PRODUCTS && typeof window.__DA_PRODUCTS.openProductModalByIndex === 'function'){
         window.__DA_PRODUCTS.openProductModalByIndex(idx);
         hideResults();
+          clearSearch();
         return;
       }
       const grid = document.querySelector('.products-grid');
@@ -243,6 +248,7 @@
         }
       }
       hideResults();
+        clearSearch();
       return;
     }
 
@@ -256,6 +262,7 @@
         }
       }catch(e){ console.warn('Search: error navegando a seccion', e); }
       hideResults();
+        clearSearch();
       return;
     }
 
@@ -269,6 +276,7 @@
         }
       }catch(e){ console.warn('Search: error navegando a FAQ', e); }
       hideResults();
+        clearSearch();
       return;
     }
 
@@ -278,6 +286,7 @@
       if (t) t.scrollIntoView({behavior:'smooth', block:'center'});
     }
     hideResults();
+      clearSearch();
   }
 
   function searchQuery(q){

@@ -443,18 +443,43 @@
       if (modalActiveIndex !== indexZeroBased) return;
       if (modalMainImage) {
         if (images[0]){
+          // preload then set to avoid sudden flashes; fade-in handled via CSS when 'loaded' class is added
           modalMainImage.classList.remove('placeholder-loading');
-          modalMainImage.src = images[0];
+          modalMainImage.classList.remove('loaded');
+          const _img = new Image();
+          _img.onload = function(){
+            modalMainImage.src = images[0];
+            // ensure a reflow then add loaded to trigger transition
+            requestAnimationFrame(()=> requestAnimationFrame(()=> modalMainImage.classList.add('loaded')));
+          };
+          _img.src = images[0];
         } else {
-          modalMainImage.removeAttribute('src');
-          modalMainImage.classList.add('placeholder-loading');
+          modalMainImage.classList.remove('placeholder-loading');
+          modalMainImage.src = 'src/img/placeholder.svg';
+          modalMainImage.classList.add('loaded');
         }
       }
       if (thumbnailContainer) {
         thumbnailContainer.innerHTML = '';
-        images.forEach((src, i) => {
-          const th = document.createElement('img'); th.src = src; th.alt = `${title} - Imagen ${i+1}`; th.className = i===0 ? 'active' : ''; th.addEventListener('click', ()=>{ if (modalMainImage) modalMainImage.src = src; thumbnailContainer.querySelectorAll('img').forEach(img => img.classList.remove('active')); th.classList.add('active'); }); thumbnailContainer.appendChild(th);
-        });
+        if (images && images.length) {
+          images.forEach((src, i) => {
+            const th = document.createElement('img');
+            th.src = src;
+            th.alt = `${title} - Imagen ${i+1}`;
+            th.className = i===0 ? 'active' : '';
+            // fade-in when loaded
+            th.style.opacity = '0';
+            th.style.transition = 'opacity .22s ease';
+            th.addEventListener('load', ()=>{ th.style.opacity = '1'; });
+            th.addEventListener('click', ()=>{ if (modalMainImage) {
+              // preload selected image then swap with fade
+              const tmp = new Image(); tmp.onload = ()=>{ modalMainImage.classList.remove('loaded'); modalMainImage.src = src; requestAnimationFrame(()=> requestAnimationFrame(()=> modalMainImage.classList.add('loaded'))); }; tmp.src = src; }
+              thumbnailContainer.querySelectorAll('img').forEach(img => img.classList.remove('active')); th.classList.add('active'); });
+            thumbnailContainer.appendChild(th);
+          });
+        } else {
+          const ph = document.createElement('img'); ph.src = 'src/img/placeholder.svg'; ph.alt = 'Imagen no disponible'; ph.className = 'active'; thumbnailContainer.appendChild(ph);
+        }
       }
     } catch(err){ console.warn('Error cargando imágenes del producto para modal', indexZeroBased, err); }
   }
